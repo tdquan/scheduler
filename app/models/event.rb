@@ -2,7 +2,7 @@ class Event < ApplicationRecord
 	after_create :validate_recurring_event
 	validates :starts_at, :ends_at, presence: true
 
-	Agenda = Struct.new(:date, :slots)
+	Agenda = Struct.new(:date, :slots, :substitution)
 
 	def self.availabilities(time)
 		@agendas = []
@@ -54,7 +54,7 @@ class Event < ApplicationRecord
 
 			slots = slots.sort.map { |slot| Time.parse(slot).strftime("%-k:%M") }
 
-			@agendas << Agenda.new(date, slots)
+			@agendas << Agenda.new(date, slots, nil)
 			time += 1.day
 		end
 		return @agendas
