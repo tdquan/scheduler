@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-	scope :next_week, ->(time) { where("(starts_at >= ? AND starts_at <= ?) OR (weekly_recurring IS ?)", time.beginning_of_day, (time + 7.days).end_of_day, true) }
+	scope :next_week, ->(time) { where("(starts_at >= ? AND starts_at <= ?) OR (weekly_recurring IS ?)", time.beginning_of_day, (time + 6.days).end_of_day, true) }
 	after_create :validate_recurring_event
 	validates :starts_at, :ends_at, presence: true
 
